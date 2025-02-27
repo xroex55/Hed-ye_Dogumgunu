@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi ki Doğdun Aşkım</title>
+    <style>
+        body {
+            background-color: #ffccff;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .cake {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(to bottom, #ff6699, #cc3366);
+            margin: auto;
+            border-radius: 20px 20px 10px 10px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .cake::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 30px;
+            background: #ffcc99;
+            top: -20px;
+            left: 10px;
+            border-radius: 50%;
+            box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .candle {
+            width: 20px;
+            height: 80px;
+            background: repeating-linear-gradient(45deg, red, red 10px, white 10px, white 20px);
+            position: absolute;
+            left: 50%;
+            top: -80px;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            cursor: pointer;
+            animation: flicker 0.5s infinite alternate;
+        }
+        .flame {
+            width: 25px;
+            height: 40px;
+            background: radial-gradient(circle, yellow 10%, orange 60%, transparent 80%);
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            opacity: 1;
+            transition: opacity 1s;
+            animation: flicker 0.2s infinite alternate;
+        }
+        .hidden {
+            opacity: 0;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            transform: rotate(-45deg);
+            animation: fall 5s linear infinite;
+            opacity: 0.8;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+        }
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+        @keyframes flicker {
+            from { opacity: 1; }
+            to { opacity: 0.8; }
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+            100% { transform: translateY(600px) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>İyi ki Doğdun Aşkım! 🎉</h1>
+        <div class="cake">
+            <div class="candle" onclick="blowCandle()">
+                <div class="flame" id="flame"></div>
+            </div>
+        </div>
+    </div>
+    <audio id="birthdayMusic" autoplay>
+        <source src="music/yalin.mp3" type="audio/mp3">
+    </audio>
+    
+    <script>
+        function blowCandle() {
+            document.getElementById('flame').classList.add('hidden');
+            startHearts();
+            setTimeout(() => {
+                window.location.href = 'iltifatlar.html';
+            }, 4000);
+        }
+
+        function startHearts() {
+            for (let i = 0; i < 50; i++) {
+                let heart = document.createElement("div");
+                heart.className = "heart";
+                heart.style.left = Math.random() * window.innerWidth + "px";
+                heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>

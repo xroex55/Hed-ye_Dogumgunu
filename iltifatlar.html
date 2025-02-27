@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İltifatlar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffd9e8;
+            text-align: center;
+            font-family: 'Great Vibes', cursive;
+            color: #8b008b;
+            overflow: hidden;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 50px;
+        }
+        p {
+            font-size: 30px;
+            margin-top: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+        button {
+            margin-top: 50px;
+            padding: 10px 20px;
+            background-color: #ff66b2;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ff3399;
+        }
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: red;
+            transform: rotate(-45deg);
+            animation: float 5s infinite ease-in-out;
+            opacity: 0.7;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: red;
+            border-radius: 50%;
+        }
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+        .heart::after {
+            left: 15px;
+            top: 0;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(-45deg); opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-800px) rotate(-45deg); opacity: 0; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Sen benim için dünyanın en güzel varlığısın...</h1>
+    <p>Gülüşünle dünyama ışık saçıyorsun, varlığın her anımı güzelleştiriyor...</p>
+    <p>Varlığınla her günü bayram gibi yaşatıyorsun, sen benim en değerli armağanımsın...</p>
+    <p>Sen benim en güzel hikayemsin, sonu hiç gelmesin istediğim...</p>
+    <p>Öküzün,seni çok seviyor hayatımın anlamı...</p>
+    <button onclick="nextPage()">Devam Et 💕</button>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 200);
+
+        function nextPage() {
+            window.location.href = "isimoyunu.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İsim Oyunu</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+<style>
+  body {
+    background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    position: relative;
+    height: 100vh;
+  }
+
+  #kelime {
+    margin: 20px;
+    font-size: 36px;
+    color: white;
+    letter-spacing: 10px;
+  }
+
+  .harf {
+    display: inline-block;
+    padding: 20px;
+    margin: 10px;
+    background: #ff69b4;
+    color: white;
+    font-size: 24px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 20, 147, 0.7);
+    transition: transform 0.3s ease;
+  }
+
+  .harf:hover {
+    transform: scale(1.2);
+    background: #ff1493;
+  }
+
+  #mesaj {
+    font-size: 24px;
+    margin-top: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px #ff1493;
+  }
+
+  button {
+    padding: 15px 30px;
+    background: #ff1493;
+    border: none;
+    color: white;
+    font-size: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 20, 147, 0.7);
+    transition: transform 0.3s ease;
+    margin-top: 20px;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+  }
+
+  @keyframes kalpYagmur {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  .kalp {
+    position: absolute;
+    color: #ff1493;
+    font-size: 24px;
+    animation: kalpYagmur 5s linear infinite;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div id="kelime"></div>
+<div id="mesaj"></div>
+<div id="harfler"></div>
+<button id="sonraki" style="display:none;" onclick="sonrakiSeviye()">Sürprize Geç</button>
+
+<script>
+  const seviyeler = ["AŞK", "HAYATIM", "SEVGİLİM", "EN DEĞERLİM"];
+  let seviye = 0;
+  let hedefKelime = seviyeler[seviye].split("");
+  let secilenHarfler = [];
+  const harflerDiv = document.getElementById("harfler");
+  const kelimeDiv = document.getElementById("kelime");
+  const mesajDiv = document.getElementById("mesaj");
+  const buton = document.getElementById("sonraki");
+
+  function karistir(kelime) {
+    return kelime.sort(() => Math.random() - 0.5);
+  }
+
+  function kalpYagdir() {
+    const kalp = document.createElement("div");
+    kalp.classList.add("kalp");
+    kalp.innerHTML = "❤";
+    kalp.style.left = `${Math.random() * 100}vw`;
+    kalp.style.animationDuration = `${Math.random() * 3 + 2}s`;
+    document.body.appendChild(kalp);
+    setTimeout(() => kalp.remove(), 5000);
+  }
+
+  setInterval(kalpYagdir, 200);
+
+  function baslatSeviye() {
+    secilenHarfler = [];
+    kelimeDiv.innerHTML = "";
+    mesajDiv.innerHTML = "";
+    harflerDiv.innerHTML = "";
+    const karisik = karistir([...hedefKelime]);
+    karisik.forEach(harf => {
+      const harfDiv = document.createElement("div");
+      harfDiv.classList.add("harf");
+      harfDiv.innerText = harf;
+      harfDiv.onclick = function() {
+        secilenHarfler.push(harf);
+        kelimeDiv.innerText = secilenHarfler.join("");
+        harfDiv.style.visibility = "hidden";
+        kontrolEt();
+      };
+      harflerDiv.appendChild(harfDiv);
+    });
+  }
+
+  function kontrolEt() {
+    if (secilenHarfler.join("") === hedefKelime.join("")) {
+      mesajDiv.innerText = "Çok iyi gidiyorsun sevgilim 💕";
+      setTimeout(() => {
+        seviye++;
+        if (seviye < seviyeler.length) {
+          hedefKelime = seviyeler[seviye].split("");
+          baslatSeviye();
+        } else {
+          mesajDiv.innerText = "Seni Çok Seviyorum 💕";
+          buton.style.display = "block";
+        }
+      }, 2000);
+    } else if (secilenHarfler.length === hedefKelime.length) {
+      mesajDiv.innerText = "Tekrar dene güzelim 💕";
+      setTimeout(baslatSeviye, 2000);
+    }
+  }
+
+  function sonrakiSeviye() {
+    window.location.href = "sürpriz.html";
+  }
+
+  baslatSeviye();
+</script>
+</body>
+</html>
